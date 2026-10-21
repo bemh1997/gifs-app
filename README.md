@@ -1,31 +1,40 @@
-# GifsApp — Sección 6
+# GifsApp — Sección 7
 
-Proyecto Angular para preparar la estructura de un dashboard administrativo de GIFs. Esta sección sienta las bases de la aplicación y deja el consumo real de la API para la Sección 7.
+Proyecto Angular que conecta el dashboard de GifsApp con la API de Giphy para consultar tendencias, buscar GIFs y conservar el historial de búsquedas.
 
 ## Temas estudiados
 
-- **Angular CLI:** proyecto, servidor de desarrollo, build y pruebas.
-- **Lazy loading:** carga de páginas con `loadComponent`.
-- **Separación de rutas:** rutas de la aplicación declaradas en `src/app/app.routes.ts`.
-- **Rutas hijas y outlets anidados:** el dashboard aloja las páginas de tendencias y búsqueda mediante un `RouterOutlet` hijo.
-- **Navegación del menú:** `RouterLink` y `RouterLinkActive`.
-- **Variables de entorno:** configuración de datos del proyecto en `src/environments/`.
-- **Componentes reutilizables:** menú lateral, lista de GIFs e ítem de GIF.
-- **Inputs como señales:** `input.required()` recibe la lista de GIFs y la URL de cada imagen.
-- **Comunicación entre componentes:** el dashboard y las páginas usan componentes hijos mediante inputs.
-- **Signals:** estado reactivo de la lista de GIFs de ejemplo.
+- **Peticiones HTTP:** consulta de tendencias y búsqueda con `HttpClient`.
+- **Modelos e interfaces:** tipos propios para GIFs y para la respuesta de Giphy.
+- **Mapeo de respuestas:** conversión de los elementos de Giphy al modelo usado por la interfaz.
+- **Signals:** estado reactivo de GIFs de tendencias, indicador de carga e historial.
+- **Búsqueda:** solicitud de GIFs según el término ingresado y presentación con componentes reutilizables.
+- **Historial:** persistencia de búsquedas en LocalStorage y consulta desde una ruta dinámica.
+- **Routing:** carga diferida de páginas y lectura del término desde los parámetros de ruta.
 - **Tailwind CSS:** utilidades para layout, espaciado, color y diseño adaptable.
 
 ## Estructura principal
 
-- `src/app/app.routes.ts`: ruta del dashboard, páginas lazy-loaded y redirecciones.
-- `src/app/gifs/pages/dashboard-page/`: layout del dashboard y outlet anidado.
-- `src/app/gifs/pages/trending-page/`: página de tendencias con GIFs de ejemplo.
-- `src/app/gifs/pages/search-page/`: estructura inicial de la página de búsqueda.
-- `src/app/gifs/components/`: menú lateral y componentes reutilizables de lista.
-- `src/environments/`: valores de configuración de desarrollo y producción.
+- `src/app/gifs/services/gifs.service.ts`: peticiones HTTP, estado e historial de búsquedas.
+- `src/app/gifs/interfaces/`: modelos de GIF y tipos de la respuesta de Giphy.
+- `src/app/gifs/mapper/gif.mapper.ts`: transformación de datos de Giphy al modelo de la aplicación.
+- `src/app/gifs/pages/trending-page/`: consulta y presentación de GIFs en tendencia.
+- `src/app/gifs/pages/search-page/`: búsqueda de GIFs.
+- `src/app/gifs/pages/gif-history/`: presentación del historial según el parámetro de ruta.
+- `src/app/app.routes.ts`: rutas lazy-loaded del dashboard, búsqueda, tendencias e historial.
+- `src/environments/`: configuración de la aplicación por entorno.
 
-> En esta etapa las imágenes de tendencias son datos de ejemplo; todavía no hay peticiones HTTP a una API. La búsqueda, las rutas dinámicas, la caché, LocalStorage y el mapeo de respuestas corresponden a la Sección 7.
+> Para ejecutar la aplicación, configura tu propia clave de API de Giphy en los archivos de entorno. No guardes claves personales en el repositorio.
+
+## Configuración de la API
+
+Usa `.env.example` como plantilla para crear `.env` en la raíz de este proyecto, junto a `package.json`, y reemplaza el valor por tu clave de Giphy:
+
+```env
+GIPHY_API_KEY=YOUR_GIPHY_API_KEY
+```
+
+Al ejecutar `pnpm start`, `pnpm build`, `pnpm test` o `pnpm watch`, se genera automáticamente el archivo TypeScript de configuración que consume Angular. `.env` y el archivo generado están excluidos de Git. Cambia `YOUR_GIPHY_API_KEY` por una clave válida para consultar Giphy. No uses una clave de producción sensible aquí: al ser una aplicación de navegador, la clave se incluye en el bundle y puede verse desde el cliente.
 
 ## Desarrollo
 

@@ -44,3 +44,7 @@ Thumbs.db
 #PNPM
 pnpm-lock.yaml
 pnpm-workspace.yaml
+
+# Local API credentials and generated Angular environment
+.env
+/src/environments/giphy-api-key.ts
